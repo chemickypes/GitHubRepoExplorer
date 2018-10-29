@@ -8,6 +8,7 @@ import com.angelomoroni.githubrepoexplorer.User
 import com.angelomoroni.githubrepoexplorer.UserEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,33 +32,40 @@ class UserRepository(val userDao: UserDao ){
         val liveData = MutableLiveData<User>()
 
 
+        GlobalScope.launch(Dispatchers.Main) {
+            val ll = userDao.load(username)
 
-        val ll = userDao.load(username)
+            if(ll?.value != null){
+                Log.d(javaClass.name,"from DB")
+                liveData.value = User(ll.value!!)
+            } else {
 
-        if(ll?.value != null){
-            Log.d(javaClass.name,"from DB")
-            liveData.value = User(ll.value!!)
-        }else {
+                var nnuser : User? = null
 
 
-            webService.getUser(username).enqueue(object : Callback<User> {
-                override fun onFailure(call: Call<User>, t: Throwable) {
-                    t.printStackTrace()
-                }
+                async(Dispatchers.IO) {
+                    val r = webService.getUser(username).execute()
 
-                override fun onResponse(call: Call<User>, response: Response<User>) {
-                    response.body()?.let {
-
+                    if(r.isSuccessful){
                         Log.d(javaClass.name,"from server")
-                        userDao.save(UserEntity(it))
-                        liveData.value = it
+                        nnuser = r?.body()?.let {
+                            userDao.save(UserEntity(it))
+                            it
+                        }
                     }
+                }.await()
 
 
-                }
 
-            })
+                liveData.value = nnuser!!
+
+
+            }
         }
+
+
+
+
         return liveData
     }
 
