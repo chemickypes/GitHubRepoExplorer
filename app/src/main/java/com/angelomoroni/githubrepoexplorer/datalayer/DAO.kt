@@ -1,8 +1,7 @@
 package com.angelomoroni.githubrepoexplorer.datalayer
 
-import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.*
-import android.arch.persistence.room.OnConflictStrategy.REPLACE
+import androidx.lifecycle.LiveData
+import androidx.room.OnConflictStrategy.REPLACE
 import com.angelomoroni.githubrepoexplorer.UserEntity
 
 

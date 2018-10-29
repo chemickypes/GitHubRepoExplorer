@@ -1,7 +1,7 @@
 package com.angelomoroni.githubrepoexplorer.ui.user
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import com.angelomoroni.githubrepoexplorer.User
 import com.angelomoroni.githubrepoexplorer.datalayer.UserRepository
 

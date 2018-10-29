@@ -1,7 +1,7 @@
 package com.angelomoroni.githubrepoexplorer
 
 import android.app.Application
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import com.angelomoroni.githubrepoexplorer.datalayer.UserDatabase
 import com.angelomoroni.githubrepoexplorer.datalayer.UserRepository
 import com.angelomoroni.githubrepoexplorer.ui.user.UserViewModel
