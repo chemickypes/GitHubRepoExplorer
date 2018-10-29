@@ -1,6 +1,5 @@
 package com.angelomoroni.githubrepoexplorer.datalayer
 
-import android.provider.Contacts
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import android.util.Log
@@ -10,9 +9,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
