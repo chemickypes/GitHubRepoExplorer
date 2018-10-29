@@ -19,8 +19,14 @@ class UserFragment : Fragment() {
 
     private val userViewModel:UserViewModel by viewModel()
 
-    private val userObserver = Observer<User> {
-        message.text = it.toString()
+    private val userObserver = Observer<com.angelomoroni.githubrepoexplorer.datalayer.Bundle<User>> {
+        if(it.isLoading){
+            message.text = "Loading"
+        }else if(it.exception != null){
+            message.text = ""
+        }else {
+            message.text = it.value?.toString()
+        }
     }
 
     override fun onCreateView(

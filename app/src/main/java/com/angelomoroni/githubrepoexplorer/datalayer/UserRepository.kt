@@ -3,6 +3,7 @@ package com.angelomoroni.githubrepoexplorer.datalayer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import android.util.Log
+import androidx.lifecycle.Transformations
 import com.angelomoroni.githubrepoexplorer.User
 import com.angelomoroni.githubrepoexplorer.UserEntity
 import kotlinx.coroutines.Dispatchers
@@ -24,45 +25,35 @@ class UserRepository(val userDao: UserDao ){
             .create(GitHubWebService::class.java)
     }
 
-    fun getUser(username:String): LiveData<User> {
-        val liveData = MutableLiveData<User>()
+    fun getUser(username:String): LiveData<Bundle<User>> {
+
+        val livedata = Transformations.map(userDao.load(username)!!){
+            Log.d(UserRepository::javaClass.name, "from db")
+            if (it == null){
+                Bundle(exception = NullPointerException())
+            }else {
+                Bundle(value = User(it))
+            }
+        }
 
 
         GlobalScope.launch(Dispatchers.Main) {
 
-
-
-            var nnuser : User? = null
-
-
             async(Dispatchers.IO) {
-                val prova = userDao.loadAll()
+                val r = webService.getUser(username).execute()
 
-                val u = userDao.load(username)
-
-                if(u != null) {
-                    nnuser = User(u)
-                }else {
-                    val r = webService.getUser(username).execute()
-
-                    if (r.isSuccessful) {
-                        Log.d(javaClass.name, "from server")
-                        nnuser = r?.body()?.let {
-                            userDao.save(UserEntity(it))
-                            it
-                        }
+                if (r.isSuccessful) {
+                    Log.d(UserRepository::javaClass.name, "from server")
+                    r?.body()?.let {
+                        userDao.save(UserEntity(it))
+                        it
                     }
                 }
             }.await()
 
-            liveData.value = nnuser!!
-
         }
 
-
-
-
-        return liveData
+        return livedata
     }
 
 }

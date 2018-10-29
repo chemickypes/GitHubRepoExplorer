@@ -19,7 +19,7 @@ abstract class UserDao{
     abstract fun save(user: UserEntity)
 
     @Query("SELECT * FROM users WHERE login = :userName")
-    abstract fun load(userName: String): UserEntity?
+    abstract fun load(userName: String): LiveData<UserEntity>?
 
     @Query("SELECT * FROM users ")
     abstract fun loadAll(): List<UserEntity>?
