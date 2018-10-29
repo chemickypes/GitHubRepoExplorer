@@ -3,6 +3,7 @@ package com.angelomoroni.githubrepoexplorer.datalayer
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
+import com.angelomoroni.githubrepoexplorer.User
 import com.angelomoroni.githubrepoexplorer.UserEntity
 
 
@@ -18,6 +19,9 @@ abstract class UserDao{
     abstract fun save(user: UserEntity)
 
     @Query("SELECT * FROM users WHERE login = :userName")
-    abstract fun load(userName: String): LiveData<UserEntity>?
+    abstract fun load(userName: String): UserEntity?
+
+    @Query("SELECT * FROM users ")
+    abstract fun loadAll(): List<UserEntity>?
 
 }

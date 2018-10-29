@@ -29,34 +29,34 @@ class UserRepository(val userDao: UserDao ){
 
 
         GlobalScope.launch(Dispatchers.Main) {
-            val ll = userDao.load(username)
-
-            if(ll?.value != null){
-                Log.d(javaClass.name,"from DB")
-                liveData.value = User(ll.value!!)
-            } else {
-
-                var nnuser : User? = null
 
 
-                async(Dispatchers.IO) {
+
+            var nnuser : User? = null
+
+
+            async(Dispatchers.IO) {
+                val prova = userDao.loadAll()
+
+                val u = userDao.load(username)
+
+                if(u != null) {
+                    nnuser = User(u)
+                }else {
                     val r = webService.getUser(username).execute()
 
-                    if(r.isSuccessful){
-                        Log.d(javaClass.name,"from server")
+                    if (r.isSuccessful) {
+                        Log.d(javaClass.name, "from server")
                         nnuser = r?.body()?.let {
                             userDao.save(UserEntity(it))
                             it
                         }
                     }
-                }.await()
+                }
+            }.await()
 
+            liveData.value = nnuser!!
 
-
-                liveData.value = nnuser!!
-
-
-            }
         }
 
 
