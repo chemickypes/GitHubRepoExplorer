@@ -7,7 +7,7 @@ import com.angelomoroni.githubrepoexplorer.datalayer.UserRepository
 import com.angelomoroni.githubrepoexplorer.ui.user.UserViewModel
 import org.koin.android.ext.android.startKoin
 import org.koin.android.ext.koin.androidApplication
-import org.koin.android.viewmodel.ext.koin.viewModel
+import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
 

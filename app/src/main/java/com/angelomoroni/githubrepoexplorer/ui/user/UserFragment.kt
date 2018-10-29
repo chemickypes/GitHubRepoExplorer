@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.angelomoroni.githubrepoexplorer.R
 import com.angelomoroni.githubrepoexplorer.User
 import kotlinx.android.synthetic.main.user_fragment.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserFragment : Fragment() {
 
@@ -31,6 +32,7 @@ class UserFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
 
 
         userViewModel.user.observe(this, userObserver)
