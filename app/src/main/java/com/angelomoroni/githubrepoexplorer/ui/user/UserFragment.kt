@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.angelomoroni.githubrepoexplorer.R
 import com.angelomoroni.githubrepoexplorer.User
 import kotlinx.android.synthetic.main.user_fragment.*
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class UserFragment : Fragment() {

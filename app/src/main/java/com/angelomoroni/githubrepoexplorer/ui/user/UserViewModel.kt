@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModel
 import com.angelomoroni.githubrepoexplorer.User
 import com.angelomoroni.githubrepoexplorer.datalayer.UserRepository
 
-class UserViewModel(var userRepository: UserRepository) : ViewModel() {
+class UserViewModel(val userRepository: UserRepository) : ViewModel() {
 
 
     val user : LiveData<User> by lazy {
